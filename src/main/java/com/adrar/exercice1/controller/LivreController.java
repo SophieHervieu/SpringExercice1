@@ -20,22 +20,22 @@ public class LivreController {
         return livreService.findAllBooks();
     }
 
-    @GetMapping("/books/{id}")
+    @GetMapping("/book/{id}")
     public Optional<Livre> getBookById(@PathVariable Long id) {
         return livreService.findById(id);
     }
 
-    @PostMapping("/books/add")
+    @PostMapping("/book")
     public Livre addBook(@RequestBody Livre livre) {
         return livreService.addBook(livre);
     }
 
-    @PutMapping("/books/update/{id}")
+    @PutMapping("/book/{id}")
     public Livre updateBook(@RequestBody Livre livre, @PathVariable Long id) {
         return livreService.updateBook(id, livre);
     }
 
-    @DeleteMapping("/books/delete/{id}")
+    @DeleteMapping("/book/{id}")
     public void deleteBook(@PathVariable Long id) {
         livreService.deleteBookById(id);
     }

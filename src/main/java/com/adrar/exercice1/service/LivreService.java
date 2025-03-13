@@ -47,9 +47,11 @@ public class LivreService {
         return null;
     }
 
-    public void deleteBookById(Long id) {
+    public boolean deleteBookById(Long id) {
         if(livreRepository.existsById(id)) {
             livreRepository.deleteById(id);
+            return true;
         }
+        return false;
     }
 }

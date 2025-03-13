@@ -17,7 +17,7 @@ public class Livre {
     @Column(name="description", nullable=false, length = 255)
     private String description;
 
-    @Column(name="datePublication", nullable=false)
+    @Column(name="date_publication", nullable=false)
     @Temporal(TemporalType.DATE)
     private Date datePublication;
 
@@ -64,8 +64,7 @@ public class Livre {
     @Override
     public String toString() {
         return "Livre{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
+                "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", datePublication=" + datePublication +
                 '}';
