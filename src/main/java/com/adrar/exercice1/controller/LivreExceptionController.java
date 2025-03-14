@@ -51,6 +51,8 @@ public class LivreExceptionController {
     public ResponseEntity<Map<String, String>> saveLivre(SaveLivreExistException saveLivreExist) {
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("Erreur : ", saveLivreExist.getMessage());
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(errorResponse);
     }
 }

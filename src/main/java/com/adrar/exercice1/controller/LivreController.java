@@ -1,5 +1,6 @@
 package com.adrar.exercice1.controller;
 
+import com.adrar.exercice1.dto.LivreDto;
 import com.adrar.exercice1.exception.LivreNotFoundException;
 import com.adrar.exercice1.exception.NoLivreFoundException;
 import com.adrar.exercice1.model.Livre;
@@ -50,5 +51,10 @@ public class LivreController {
         }
         livreService.deleteBookById(id);
         return "Livre supprimé avec succès";
+    }
+
+    @GetMapping("/book/dto/{id}")
+    public LivreDto getLivreDtoById(@PathVariable Long id) {
+        return livreService.getLivreDtoById(id);
     }
 }
