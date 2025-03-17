@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -53,8 +54,15 @@ public class LivreController {
         return "Livre supprimé avec succès";
     }
 
-    @GetMapping("/book/dto/{id}")
+    @GetMapping("/bookdto/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public LivreDto getLivreDtoById(@PathVariable Long id) {
         return livreService.getLivreDtoById(id);
+    }
+
+    @GetMapping("/bookdto")
+    @ResponseStatus(HttpStatus.OK)
+    public List<LivreDto> getAllLivres() {
+        return livreService.getAllLivres();
     }
 }

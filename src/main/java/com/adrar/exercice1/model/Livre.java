@@ -2,7 +2,10 @@ package com.adrar.exercice1.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="livre")
@@ -21,24 +24,34 @@ public class Livre {
     @Temporal(TemporalType.DATE)
     private Date datePublication;
 
-    @Column(name="genres", nullable = true, length = 50)
-    private String genres;
-
     @Column(name="auteur", nullable = true, length = 50)
     private String auteur;
 
-    @Column(name="maison_edition", nullable = true, length = 50)
-    private String maisonEdition;
+    @ManyToOne
+    @JoinColumn(name = "id_utilisateur")
+    private User user;
 
-    public Livre() {}
+    @ManyToOne
+    @JoinColumn(name="maison_edition_id")
+    private MaisonEdition maisonEdition;
 
-    public Livre(String title, String description, Date datePublication, String genres, String auteur, String maisonEdition) {
+    @ManyToMany
+    @JoinTable(name="livre_genre",
+    joinColumns = @JoinColumn(name="livre_id"),
+    inverseJoinColumns = @JoinColumn(name="genre_id"))
+    private List<Genre> genres = new ArrayList<>();
+
+    public Livre() {
+        this.genres = new ArrayList<>();
+    }
+
+    public Livre(String title, String description, Date datePublication, String auteur, MaisonEdition maisonEdition) {
         this.title = title;
         this.description = description;
         this.datePublication = datePublication;
-        this.genres = genres;
         this.auteur = auteur;
         this.maisonEdition = maisonEdition;
+        this.genres = new ArrayList<>();
     }
 
     public void setId(Long id) {
@@ -73,11 +86,11 @@ public class Livre {
         this.datePublication = datePublication;
     }
 
-    public String getGenres() {
+    public List<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(String genres) {
+    public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
 
@@ -89,23 +102,33 @@ public class Livre {
         this.auteur = auteur;
     }
 
-    public String getMaisonEdition() {
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public MaisonEdition getMaisonEdition() {
         return maisonEdition;
     }
 
-    public void setMaisonEdition(String maisonEdition) {
+    public void setMaisonEdition(MaisonEdition maisonEdition) {
         this.maisonEdition = maisonEdition;
     }
 
     @Override
     public String toString() {
         return "Livre{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", datePublication=" + datePublication +
-                ", genres='" + genres + '\'' +
                 ", auteur='" + auteur + '\'' +
-                ", maisonEdition='" + maisonEdition + '\'' +
+                ", user=" + user +
+                ", maisonEdition=" + maisonEdition.toString() +
+                ", genres=" + genres +
                 '}';
     }
 }

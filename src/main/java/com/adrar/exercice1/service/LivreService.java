@@ -2,7 +2,9 @@ package com.adrar.exercice1.service;
 
 import com.adrar.exercice1.dto.LivreDto;
 import com.adrar.exercice1.exception.SaveLivreExistException;
+import com.adrar.exercice1.exception.UpdateLivreNotFoundException;
 import com.adrar.exercice1.model.Livre;
+import com.adrar.exercice1.model.MaisonEdition;
 import com.adrar.exercice1.repository.LivreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +30,7 @@ public class LivreService {
             LocalDate localDate = LocalDate.of(1862, 3, 29);
             Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-            Livre livre = new Livre("Les Misérables", "Saga de Victor Hugo", date, "roman", "Victor Hugo", "Hetzel");
+            Livre livre = new Livre();
         }
         return livreRepository.findAll();
     }
@@ -82,6 +84,9 @@ public class LivreService {
     }
 
     public LivreDto getLivreDtoById(Long id) {
+        if(!livreRepository.existsById(id)) {
+            throw new UpdateLivreNotFoundException(id);
+        }
         return livreDtoWrapper.livreDto(livreRepository.findById(id).get());
     }
 }
