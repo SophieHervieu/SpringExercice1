@@ -3,8 +3,10 @@ package com.adrar.exercice1.service;
 import com.adrar.exercice1.dto.LivreDto;
 import com.adrar.exercice1.exception.SaveLivreExistException;
 import com.adrar.exercice1.exception.UpdateLivreNotFoundException;
+import com.adrar.exercice1.model.Genre;
 import com.adrar.exercice1.model.Livre;
 import com.adrar.exercice1.model.MaisonEdition;
+import com.adrar.exercice1.repository.GenreRepository;
 import com.adrar.exercice1.repository.LivreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,9 @@ public class LivreService {
 
     @Autowired
     private LivreRepository livreRepository;
+
+    @Autowired
+    private GenreRepository genreRepository;
 
     @Autowired
     private LivreDtoWrapper livreDtoWrapper;
@@ -69,6 +74,14 @@ public class LivreService {
             return true;
         }
         return false;
+    }
+
+    public void addGenre(Genre genre) {
+        this.genreRepository.save(genre);
+    }
+
+    public void removeGenre(Genre genre) {
+        this.genreRepository.delete(genre);
     }
 
     public boolean exists(Long id) {

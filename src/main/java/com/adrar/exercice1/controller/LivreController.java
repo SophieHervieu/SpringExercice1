@@ -5,6 +5,7 @@ import com.adrar.exercice1.exception.LivreNotFoundException;
 import com.adrar.exercice1.exception.NoLivreFoundException;
 import com.adrar.exercice1.model.Livre;
 import com.adrar.exercice1.service.LivreService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class LivreController {
 
     @PostMapping("/book")
     @ResponseStatus(HttpStatus.CREATED)
-    public Livre addBook(@RequestBody Livre livre) {
+    public Livre addBook(@Valid @RequestBody Livre livre) {
         return livreService.addBook(livre);
     }
 

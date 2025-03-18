@@ -1,6 +1,8 @@
 package com.adrar.exercice1.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="genre")
@@ -9,13 +11,14 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="name", nullable = false, length = 50)
+    @Column(name="name", nullable = false, unique=true, length = 50)
+    @NotBlank(message="le nom du genre ne peut pas être vide")
+    @Size(min = 3, message="le nom du genre doit faire au minimum 3 caractères")
     private String name;
 
     public Genre() {}
 
-    public Genre(Long id, String name) {
-        this.id = id;
+    public Genre(String name) {
         this.name = name;
     }
 

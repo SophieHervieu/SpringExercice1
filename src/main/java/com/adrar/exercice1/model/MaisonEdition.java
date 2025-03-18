@@ -1,6 +1,9 @@
 package com.adrar.exercice1.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="maison_edition")
@@ -10,9 +13,13 @@ public class MaisonEdition {
     private Integer id;
 
     @Column(name="libelle", nullable = false, length = 50)
+    @NotBlank(message="le libellé de la maison d'édition ne peut pas être vide")
+    @Size(min = 2, message="Le libellé de la maison d'édition doit contenir au minimum 2 caractères")
     private String libelle;
 
     @Column(name="description", length = 255)
+    @NotNull(message="La description de la maison d'édition ne peut avoir une valeur nulle")
+    @Size(min = 5, message="La description de la maison d'édition doit contenir au minimum 5 caractères")
     private String description;
 
     public MaisonEdition() {}

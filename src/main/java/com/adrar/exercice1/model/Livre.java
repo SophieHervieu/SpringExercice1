@@ -1,6 +1,7 @@
 package com.adrar.exercice1.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,16 +16,28 @@ public class Livre {
     private Long id;
 
     @Column(name="titre", nullable=false, length = 50)
+    @NotBlank(message="Le titre du livre ne peut pas être vide")
+    @Size(max = 3, message ="Le titre du livre doit faire au minimum 3 caractères")
     private String title;
 
     @Column(name="description", nullable=false, length = 255)
+    @NotBlank(message="La description du livre ne peut pas être vide")
+    @Size(max = 5, message ="La description du livre doit faire au minimum 5 caractères")
     private String description;
 
     @Column(name="date_publication", nullable=false)
     @Temporal(TemporalType.DATE)
+    @PastOrPresent()
     private Date datePublication;
 
+    @Min(value = 1800, message = "L'année doit être après 1800")
+    @Max(value = 2025, message = "L'année doit être avant 2025")
+    public int getYear() {
+        return datePublication != null ? datePublication.getYear() : 0;
+    }
+
     @Column(name="auteur", nullable = true, length = 50)
+    @NotNull(message="L'auteur du livre ne peut pas avoir une valeur nulle")
     private String auteur;
 
     @ManyToOne
@@ -39,7 +52,7 @@ public class Livre {
     @JoinTable(name="livre_genre",
     joinColumns = @JoinColumn(name="livre_id"),
     inverseJoinColumns = @JoinColumn(name="genre_id"))
-    private List<Genre> genres = new ArrayList<>();
+    private List<Genre> genres;
 
     public Livre() {
         this.genres = new ArrayList<>();
@@ -90,8 +103,8 @@ public class Livre {
         return genres;
     }
 
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
+    public void setGenres(Genre genres) {
+        this.genres.add(genres);
     }
 
     public String getAuteur() {
